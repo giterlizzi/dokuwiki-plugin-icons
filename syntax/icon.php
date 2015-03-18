@@ -117,56 +117,82 @@ class syntax_plugin_icons_icon extends DokuWiki_Syntax_Plugin {
       $this->classes = array();
       $this->styles  = array();
 
+      $this->flags['pack'] = $pack;
+      $this->flags['icon'] = $icon;
+
       if ((int) $flags[0] > 0) {
         $flags[] = "size=" . $flags[0];
         unset($flags[0]);
       }
 
-      $this->flags['pack'] = $pack;
-      $this->flags['icon'] = $icon;
+      if ($left = array_search('left', $flags)) {
+        $flags[] = 'align=left';
+        unset($flags[$left]);
+      }
+
+      if ($right = array_search('right', $flags)) {
+        $flags[] = 'align=right';
+        unset($flags[$right]);
+      }
+
+      if ($center = array_search('center', $flags)) {
+        $flags[] = 'align=center';
+        unset($flags[$center]);
+      }
 
       foreach ($flags as $flag) {
+
         list($flag, $value) = explode('=', $flag);
+
         switch ($flag) {
+
           case 'pack':
             $this->flags['pack'] = $value;
             break;
+
           case 'size':
             $this->flags['size'] = (int) $value;
             $this->styles[] = "font-size:{$value}px";
             break;
+
           case 'circle':
             $this->flags['circle'] = true;
             $this->styles[] = 'border-radius:50%; -moz-border-radius:50%; -webkit-border-radius:50%';
             break;
+
           case 'padding':
             $this->flags['padding'] = $value;
             $this->styles[] = "padding:$value";
             break;
+
           case 'background':
             $this->flags['background'] = $value;
             $this->styles[] = "background-color:$value";
             break;
+
           case 'color':
             $this->flags['color'] = $value;
             $this->styles[] = "color: $value";
             break;
+
           case 'class':
             $this->flags['class'] = $value;
             $this->classes[] = $value;
             break;
+
           case 'align':
 
             $this->flags['align'] = $value;
 
             if ($value !== 'center') {
               $margin = ($value == 'left') ? 'right' : 'left';
-              $this->styles[] = "float:$value; margin-$margin: .1em";
+              $this->styles[] = "float:$value; margin-$margin: .2em";
             } else {
               $this->styles[] = "display:block; text-align:center; margin:0 auto";
             }
 
             break;
+
           default:
             $this->classes[] = $flag;
         }
@@ -175,6 +201,7 @@ class syntax_plugin_icons_icon extends DokuWiki_Syntax_Plugin {
       if (! isset($this->flags['size'])) {
         $this->styles[] = "font-size:" . $this->getConf('defaultSize') . "px";
       }
+
       if ($this->flags['pack'] == 'icon') {
         $this->flags['pack'] = $this->getConf('defaultPack');
       }
@@ -200,7 +227,7 @@ class syntax_plugin_icons_icon extends DokuWiki_Syntax_Plugin {
 
     protected function makeFuguePath($icon) {
 
-        $repo  = 'https://raw.githubusercontent.com/yusukekamiyamane/fugue-icons/master';
+        $repo  = rtrim($this->getConf('fugueURL'), '/');
         $sizes = array(16, 24, 32);
         $size  = (($this->getFlag('size') > max($sizes)) ? max($sizes) : $this->getFlag('size'));
 
@@ -222,7 +249,7 @@ class syntax_plugin_icons_icon extends DokuWiki_Syntax_Plugin {
 
     protected function makeOxygenPath($icon) {
 
-      $repo = 'https://raw.githubusercontent.com/pasnox/oxygen-icons-png/master/oxygen';
+      $repo = rtrim($this->getConf('oxygenURL'), '/');
       $size = $this->getFlag('size').'x'.$this->getFlag('size');
       return "$repo/$size/$icon.png";
 
