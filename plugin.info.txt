@@ -3,5 +3,5 @@ author Giuseppe Di Terlizzi
 email giuseppe.diterlizzi@gmail.com
 date 2015-03-17
 name Icons Plugin
-desc Add icons to Dokuwiki
-url http://www.dokuwiki.org/devel:syntax_plugins
+desc Embed icons in Dokuwiki
+url http://www.dokuwiki.org/plugin:icons
