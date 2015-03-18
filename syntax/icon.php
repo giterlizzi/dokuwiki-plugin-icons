@@ -202,7 +202,7 @@ class syntax_plugin_icons_icon extends DokuWiki_Syntax_Plugin {
 
         $repo  = 'https://raw.githubusercontent.com/yusukekamiyamane/fugue-icons/master';
         $sizes = array(16, 24, 32);
-        $size  = (($this->getFlag('size') > max($sizes)) ? max($sizes) : $this->getFlag($size));
+        $size  = (($this->getFlag('size') > max($sizes)) ? max($sizes) : $this->getFlag('size'));
 
         switch ($size) {
             case 0:
