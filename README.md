@@ -1,4 +1,5 @@
 Icons Plugin for DokuWiki
+=========================
 
 Embed icons to your DokuWiki
 
