@@ -13,3 +13,5 @@ $lang['fontAwesomeURL']  = 'Font Awesome CSS URL (CDN or local)';
 $lang['fugueURL']        = 'Fugue base path URL (CDN or local)';
 $lang['oxygenURL']       = 'Oxygen base path URL (CDN or local)';
 $lang['loadFontAwesome'] = 'Do you want load the CSS file of Font Awesome ?';
+$lang['silkURL']         = 'Silk base path URL (CDN or local)';
+$lang['flagURL']         = 'Flag base path URL (CDN or local)';

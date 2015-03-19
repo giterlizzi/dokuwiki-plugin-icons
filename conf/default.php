@@ -11,3 +11,5 @@ $conf['fontAwesomeURL']  = '//maxcdn.bootstrapcdn.com/font-awesome/latest/css/fo
 $conf['loadFontAwesome'] = 1;
 $conf['fugueURL']        = 'https://raw.githubusercontent.com/yusukekamiyamane/fugue-icons/master';
 $conf['oxygenURL']       = 'https://raw.githubusercontent.com/pasnox/oxygen-icons-png/master/oxygen';
+$conf['silkURL']         = 'http://icons.iconarchive.com/icons/famfamfam/silk/16';
+$conf['flagURL']         = 'http://icons.iconarchive.com/icons/famfamfam/flag/16';
