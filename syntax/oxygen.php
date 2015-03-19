@@ -13,5 +13,18 @@ if(!defined('DOKU_INC')) die();
 require_once(dirname(__FILE__).'/icon.php');
 
 class syntax_plugin_icons_oxygen extends syntax_plugin_icons_icon {
+
     protected $pattern = '{{oxygen>.+?}}';
+
+    const IS_ICON = true;
+
+    public static function makePath($icon, $size, $base_url) {
+
+        $sizes = array(8, 16, 22, 32, 48, 64, 128, 256, 512);
+        $size  = (($size > max($sizes)) ? max($sizes) : $size);
+
+        return "$base_url/{$size}x{$size}/$icon.png";
+
+    }
+
 }

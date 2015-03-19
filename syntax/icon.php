@@ -77,29 +77,54 @@ class syntax_plugin_icons_icon extends DokuWiki_Syntax_Plugin {
             list($pack, $icon, $flags, $title) = $data;
             $this->parseFlags($pack, $icon, $flags);
 
-            switch ($this->getFlag('pack')) {
-                case 'fugue':
-                case 'oxygen':
-                    $path = $this->makeIconPath($icon);    
-                    $renderer->doc .= sprintf('<img src="%s" title="%s" class="%s" style="%s" />',
-                                              $path, $title,
-                                              trim(implode(' ', $this->getClasses()), ' '),
-                                              trim(implode(';', $this->getStyles()), ';'));
-                    return true;
+            $class_icon = 'syntax_plugin_icons_'.$this->getFlag('pack');
+
+            if (constant("$class_icon::IS_ICON")) {
+
+              unset($this->styles['font-size']);
+              $size      = $this->getFlag('size');
+              $base_path = rtrim($this->getConf("{$pack}URL"), '/');
+              $path      = call_user_func_array(array($class_icon, 'makePath'), array($icon, $size, $base_path));
+
+              $renderer->doc .= sprintf('<img src="%s" title="%s" class="%s" style="%s" />',
+                                        $path, $title,
+                                        $this->toClassString($this->getClasses()),
+                                        $this->toInlineStyle($this->getStyles()));
+              return true;
+
             }
 
             $this->classes[] = $this->getFlag('pack');
             $this->classes[] = $this->getFlag('pack') . '-' . $icon;
 
             $renderer->doc .= sprintf('<i class="%s" style="%s" title="%s"></i>',
-                                      trim(implode(' ', $this->getClasses()), ' '),
-                                      trim(implode(';', $this->getStyles()), ';'),
+                                      $this->toClassString($this->getClasses()),
+                                      $this->toInlineStyle($this->getStyles()),
                                       $title);
+
             return true;
 
         }
 
         return false;
+
+    }
+
+    protected function toClassString($things) {
+      return trim(implode(' ', $things), ' ');
+    }
+
+    protected function toInlineStyle($things) {
+
+      $result = '';
+      
+      foreach ($things as $property => $value) {
+        $result .= "$property:$value;";
+      }
+
+      $result = trim($result, ';');
+
+      return $result;
 
     }
 
@@ -151,28 +176,30 @@ class syntax_plugin_icons_icon extends DokuWiki_Syntax_Plugin {
             break;
 
           case 'size':
-            $this->flags['size'] = (int) $value;
-            $this->styles[] = "font-size:{$value}px";
+            $this->flags['size']       = (int) $value;
+            $this->styles['font-size'] = "{$value}px";
             break;
 
           case 'circle':
-            $this->flags['circle'] = true;
-            $this->styles[] = 'border-radius:50%; -moz-border-radius:50%; -webkit-border-radius:50%';
+            $this->flags['circle']                 = true;
+            $this->styles['border-radius']         = '50%';
+            $this->styles['-moz-border-radius']    = '50%';
+            $this->styles['-webkit-border-radius'] = '50%';
             break;
 
           case 'padding':
-            $this->flags['padding'] = $value;
-            $this->styles[] = "padding:$value";
+            $this->flags['padding']  = $value;
+            $this->styles['padding'] = $value;
             break;
 
           case 'background':
-            $this->flags['background'] = $value;
-            $this->styles[] = "background-color:$value";
+            $this->flags['background']        = $value;
+            $this->styles['background-color'] = $value;
             break;
 
           case 'color':
-            $this->flags['color'] = $value;
-            $this->styles[] = "color: $value";
+            $this->flags['color']  = $value;
+            $this->styles['color'] = $value;
             break;
 
           case 'class':
@@ -186,9 +213,12 @@ class syntax_plugin_icons_icon extends DokuWiki_Syntax_Plugin {
 
             if ($value !== 'center') {
               $margin = ($value == 'left') ? 'right' : 'left';
-              $this->styles[] = "float:$value; margin-$margin: .2em";
+              $this->styles['float'] = $value;
+              $this->styles["margin-$margin"] = '.2em';
             } else {
-              $this->styles[] = "display:block; text-align:center; margin:0 auto";
+              $this->styles['display']    = 'block';
+              $this->styles['text-align'] = 'center';
+              $this->styles['margin']     = '0 auto';
             }
 
             break;
@@ -199,7 +229,8 @@ class syntax_plugin_icons_icon extends DokuWiki_Syntax_Plugin {
       }
 
       if (! isset($this->flags['size'])) {
-        $this->styles[] = "font-size:" . $this->getConf('defaultSize') . "px";
+        $this->flags['size'] = $this->getConf('defaultSize');
+        $this->styles['font-size'] = $this->getConf('defaultSize') . "px";
       }
 
       if ($this->flags['pack'] == 'icon') {
@@ -214,45 +245,6 @@ class syntax_plugin_icons_icon extends DokuWiki_Syntax_Plugin {
 
     protected function getClasses() {
       return $this->classes;
-    }
-
-    protected function makeIconPath($icon) {
-
-      switch ($this->getFlag('pack')) {
-          case 'fugue'  : return $this->makeFuguePath($icon);
-          case 'oxygen' : return $this->makeOxygenPath($icon);
-      }
-
-    }
-
-    protected function makeFuguePath($icon) {
-
-        $repo  = rtrim($this->getConf('fugueURL'), '/');
-        $sizes = array(16, 24, 32);
-        $size  = (($this->getFlag('size') > max($sizes)) ? max($sizes) : $this->getFlag('size'));
-
-        switch ($size) {
-            case 0:
-            case 16:
-               $size = 'icons'; break;
-            case 24:
-              $size = 'bonus/icons-24'; break;
-            case 32:
-              $size = 'bonus/icons-32'; break;
-            default:
-              $size = 'icons';
-        }
-
-        return "$repo/$size/$icon.png";
-
-    }
-
-    protected function makeOxygenPath($icon) {
-
-      $repo = rtrim($this->getConf('oxygenURL'), '/');
-      $size = $this->getFlag('size').'x'.$this->getFlag('size');
-      return "$repo/$size/$icon.png";
-
     }
 
 }

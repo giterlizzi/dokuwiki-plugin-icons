@@ -1,6 +1,6 @@
 <?php
 /**
- * Plugin Icons: Glyphicons helper
+ * Plugin Icons: Font Awesome helper
  * 
  * @license    GPL 2 (http://www.gnu.org/licenses/gpl.html)
  * @author     Giuseppe Di Terlizzi <giuseppe.diterlizzi>
@@ -12,7 +12,7 @@ if(!defined('DOKU_INC')) die();
 
 require_once(dirname(__FILE__).'/icon.php');
 
-class syntax_plugin_icons_glyphicon extends syntax_plugin_icons_icon {
-    protected $pattern = '{{glyphicon>.+?}}';
+class syntax_plugin_icons_fa extends syntax_plugin_icons_icon {
+    protected $pattern = '{{fa>.+?}}';
     const IS_ICON = false;
 }
