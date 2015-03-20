@@ -172,55 +172,54 @@ class syntax_plugin_icons_icon extends DokuWiki_Syntax_Plugin {
         switch ($flag) {
 
           case 'pack':
-            $this->flags['pack'] = $value;
+            $this->flags[$flag] = $value;
             break;
 
           case 'size':
-            $this->flags['size']       = (int) $value;
+            $this->flags[$flag]       = (int) $value;
             $this->styles['font-size'] = "{$value}px";
             break;
 
           case 'circle':
-            $this->flags['circle']                 = true;
+            $this->flags[$flag]                 = true;
             $this->styles['border-radius']         = '50%';
             $this->styles['-moz-border-radius']    = '50%';
             $this->styles['-webkit-border-radius'] = '50%';
             break;
 
+          case 'border':
+            $this->flags[$flag]     = true;
+            $this->styles['border'] = '0.08em solid #EEE';
+            break;
+
+          case 'borderColor':
+            $this->flags[$flag] = $value;
+            $this->styles['border-color'] = $value;
+            break;
+
           case 'padding':
-            $this->flags['padding']  = $value;
+            $this->flags[$flag]  = $value;
             $this->styles['padding'] = $value;
             break;
 
           case 'background':
-            $this->flags['background']        = $value;
+            $this->flags[$flag]        = $value;
             $this->styles['background-color'] = $value;
             break;
 
           case 'color':
-            $this->flags['color']  = $value;
+            $this->flags[$flag]  = $value;
             $this->styles['color'] = $value;
             break;
 
           case 'class':
-            $this->flags['class'] = $value;
+            $this->flags[$flag] = $value;
             $this->classes[] = $value;
             break;
 
           case 'align':
-
-            $this->flags['align'] = $value;
-
-            if ($value !== 'center') {
-              $margin = ($value == 'left') ? 'right' : 'left';
-              $this->styles['float'] = $value;
-              $this->styles["margin-$margin"] = '.2em';
-            } else {
-              $this->styles['display']    = 'block';
-              $this->styles['text-align'] = 'center';
-              $this->styles['margin']     = '0 auto';
-            }
-
+            $this->flags[$flag] = $value;
+            $this->classes[] = "media$value";
             break;
 
           default:

@@ -1,7 +1,7 @@
 base icons
 author Giuseppe Di Terlizzi
 email giuseppe.diterlizzi@gmail.com
-date 2015-03-19
+date 2015-03-20
 name Icons Plugin
 desc Embed icons in Dokuwiki
 url http://www.dokuwiki.org/plugin:icons
