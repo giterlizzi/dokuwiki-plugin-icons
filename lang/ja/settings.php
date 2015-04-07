@@ -4,7 +4,7 @@
 *
 * @author Hideaki SAWADA <chuno@live.jp>
 */
-lang['defaultSize']     = 'デフォルトアイコンサイズ';
+$lang['defaultSize']     = 'デフォルトアイコンサイズ';
 $lang['defaultPack']     = 'デフォルトアイコン集';
 $lang['fontAwesomeURL']  = 'Font Awesome の CSS URL（CDN 又は local）';
 $lang['fugueURL']        = 'Fugue の URL（CDN 又は local）';
