@@ -218,8 +218,23 @@ class syntax_plugin_icons_icon extends DokuWiki_Syntax_Plugin {
             break;
 
           case 'align':
+
             $this->flags[$flag] = $value;
-            $this->classes[] = "media$value";
+            $class_icon = 'syntax_plugin_icons_'.$this->getFlag('pack');
+
+            if (constant("$class_icon::IS_ICON")) {
+              $this->classes[] = "media$value";
+            } else {
+
+              if ($value == 'center') {
+                $this->styles['text-align'] = 'center';
+              } else {
+                $this->styles['padding-'.(($value == 'left') ? 'right' : 'left')] = '.2em';
+                $this->styles['float'] = $value;
+              }
+              
+            }
+            
             break;
 
           default:
