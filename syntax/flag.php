@@ -19,7 +19,24 @@ class syntax_plugin_icons_flag extends syntax_plugin_icons_icon {
     const IS_ICON = true;
 
     public static function makePath($icon, $size, $base_url) {
+
+      if ($translation = plugin_load('helper', 'translation')) {
+
+        $translation_url  = rtrim(DOKU_URL.DOKU_BASE, '/') . '/lib/plugins/translation/flags';
+        $translation_path = rtrim(DOKU_PLUGIN, '/')        . '/translation/flags';
+
+        if (file_exists("$translation_path/$icon.gif")) {
+          return "$translation_url/$icon.gif";
+        }
+
+        if (file_exists("$translation_path/more/$icon.gif")) {
+          return "$translation_url/more/$icon.gif";
+        }
+
+      }
+
       return "$base_url/$icon-icon.png";
+
     }
 
 }
