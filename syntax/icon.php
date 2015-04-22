@@ -54,9 +54,9 @@ class syntax_plugin_icons_icon extends DokuWiki_Syntax_Plugin {
         $match                = substr($match, 2, -2); // strip markup
         list($match, $flags)  = explode('?', $match, 2);
         list($pack, $icon)    = preg_split('/>/u', $match, 2);
-        list($flags, $title)  = explode('|', $flags);
+        list($flags, $title, $url)  = explode('|', $flags);
 
-        return array($pack, $icon, explode('&', $flags), $title, $align, $match, $state, $pos);
+        return array($pack, $icon, explode('&', $flags), $title, $url, $align, $match, $state, $pos);
 
     }
 
@@ -74,7 +74,7 @@ class syntax_plugin_icons_icon extends DokuWiki_Syntax_Plugin {
 
             /** @var Doku_Renderer_xhtml $renderer */
 
-            list($pack, $icon, $flags, $title) = $data;
+            list($pack, $icon, $flags, $title, $url) = $data;
             $this->parseFlags($pack, $icon, $flags);
 
             $class_icon = 'syntax_plugin_icons_'.$this->getFlag('pack');
@@ -86,10 +86,16 @@ class syntax_plugin_icons_icon extends DokuWiki_Syntax_Plugin {
               $base_path = rtrim($this->getConf("{$pack}URL"), '/');
               $path      = call_user_func_array(array($class_icon, 'makePath'), array($icon, $size, $base_path));
 
+              if (isset($url)) {
+                  $renderer->doc .= sprintf('<a href="%s" rel="nofollow">', $url);
+              }
               $renderer->doc .= sprintf('<img src="%s" title="%s" class="%s" style="%s" />',
                                         $path, $title,
                                         $this->toClassString($this->getClasses()),
                                         $this->toInlineStyle($this->getStyles()));
+              if (isset($url)) {
+                  $renderer->doc .= sprintf('</a>');
+              }
               return true;
 
             }
@@ -97,10 +103,16 @@ class syntax_plugin_icons_icon extends DokuWiki_Syntax_Plugin {
             $this->classes[] = $this->getFlag('pack');
             $this->classes[] = $this->getFlag('pack') . '-' . $icon;
 
+            if (isset($url)) {
+                  $renderer->doc .= sprintf('<a href="%s" rel="nofollow">', $url);
+            }
             $renderer->doc .= sprintf('<i class="%s" style="%s" title="%s"></i>',
                                       $this->toClassString($this->getClasses()),
                                       $this->toInlineStyle($this->getStyles()),
                                       $title);
+            if (isset($url)) {
+                  $renderer->doc .= sprintf('</a>');
+            }
 
             return true;
 
