@@ -87,7 +87,7 @@ class syntax_plugin_icons_icon extends DokuWiki_Syntax_Plugin {
               $path      = call_user_func_array(array($class_icon, 'makePath'), array($icon, $size, $base_path));
 
               if (isset($url)) {
-                  $renderer->doc .= sprintf('<a href="%s">', $url);
+                  $renderer->doc .= sprintf('<a href="%s" rel="nofollow">', $url);
               }
               $renderer->doc .= sprintf('<img src="%s" title="%s" class="%s" style="%s" />',
                                         $path, $title,
@@ -104,7 +104,7 @@ class syntax_plugin_icons_icon extends DokuWiki_Syntax_Plugin {
             $this->classes[] = $this->getFlag('pack') . '-' . $icon;
 
             if (isset($url)) {
-                  $renderer->doc .= sprintf('<a href="%s">', $url);
+                  $renderer->doc .= sprintf('<a href="%s" rel="nofollow">', $url);
             }
             $renderer->doc .= sprintf('<i class="%s" style="%s" title="%s"></i>',
                                       $this->toClassString($this->getClasses()),
