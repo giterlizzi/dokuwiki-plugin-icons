@@ -52,9 +52,9 @@ class syntax_plugin_icons_icon extends DokuWiki_Syntax_Plugin {
     public function handle($match, $state, $pos, Doku_Handler $handler) {
 
         $match                = substr($match, 2, -2); // strip markup
+        list($match, $title, $url) = explode('|', $match);
         list($match, $flags)  = explode('?', $match, 2);
-        list($pack, $icon)    = preg_split('/>/u', $match, 2);
-        list($flags, $title, $url)  = explode('|', $flags);
+        list($pack, $icon)    = explode('>', $match, 2);
 
         return array($pack, $icon, explode('&', $flags), $title, $url, $align, $match, $state, $pos);
 
