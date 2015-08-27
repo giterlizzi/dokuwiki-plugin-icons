@@ -6,10 +6,10 @@
  * @author     Giuseppe Di Terlizzi <giuseppe.diterlizzi@gmail.com>
  * @copyright  (C) 2015, Giuseppe Di Terlizzi
  */
- 
+
 // must be run within Dokuwiki
 if(!defined('DOKU_INC')) die();
- 
+
 class syntax_plugin_icons_icon extends DokuWiki_Syntax_Plugin {
 
     protected $pattern = '{{icon>.+?}}';
@@ -31,15 +31,16 @@ class syntax_plugin_icons_icon extends DokuWiki_Syntax_Plugin {
      *
      * @return int
      */
-    public function getSort() { return 32; }
- 
+    public function getSort() { return 299; }
+
     /**
      * @param  string  $mode
      */
     public function connectTo($mode) {
         $this->Lexer->addSpecialPattern($this->pattern, $mode, 'plugin_icons_'.$this->getPluginComponent());
+        $this->Lexer->addSpecialPattern('\[\[[^\}]+\|'.$this->pattern.'\]\]', $mode, 'plugin_icons_'.$this->getPluginComponent());
     }
- 
+
     /**
      * Handler to prepare matched data for the rendering process
      *
@@ -51,12 +52,27 @@ class syntax_plugin_icons_icon extends DokuWiki_Syntax_Plugin {
      */ 
     public function handle($match, $state, $pos, Doku_Handler $handler) {
 
-        $match                = substr($match, 2, -2); // strip markup
-        list($match, $title, $url) = explode('|', $match);
+        $match = substr($match, 2, -2); // strip markup
+        list($match, $title, $title2) = explode('|', $match);
+
+        if (isset($title2)) $title .= '}}';
+
+        if (isset($title) && preg_match('/'.$this->pattern.'/', $title)) {
+
+          $url   = $match;
+          $match = $title;
+
+          $match = substr($match, 2, -2); // strip markup
+          list($match, $title) = explode('|', $match);
+
+          if (isset($title2)) $title = rtrim($title2, '}');
+
+        }
+
         list($match, $flags)  = explode('?', $match, 2);
         list($pack, $icon)    = explode('>', $match, 2);
 
-        return array($pack, $icon, explode('&', $flags), $title, $url, $align, $match, $state, $pos);
+        return array($pack, $icon, explode('&', $flags), $title, $url, $match, $state, $pos);
 
     }
 
@@ -86,32 +102,50 @@ class syntax_plugin_icons_icon extends DokuWiki_Syntax_Plugin {
               $base_path = rtrim($this->getConf("{$pack}URL"), '/');
               $path      = call_user_func_array(array($class_icon, 'makePath'), array($icon, $size, $base_path));
 
-              if (isset($url)) {
-                  $renderer->doc .= sprintf('<a href="%s" rel="nofollow">', $url);
-              }
-              $renderer->doc .= sprintf('<img src="%s" title="%s" class="%s" style="%s" />',
-                                        $path, $title,
-                                        $this->toClassString($this->getClasses()),
-                                        $this->toInlineStyle($this->getStyles()));
-              if (isset($url)) {
-                  $renderer->doc .= sprintf('</a>');
-              }
-              return true;
+              $icon_markup = sprintf('<img src="%s" title="%s" class="%s" style="%s" />',
+                                     $path, $title,
+                                     $this->toClassString($this->getClasses()),
+                                     $this->toInlineStyle($this->getStyles()));
+
+            } else {
+
+              $this->classes[] = $this->getFlag('pack');
+              $this->classes[] = $this->getFlag('pack') . '-' . $icon;
+  
+              $icon_markup = sprintf('<i class="%s" style="%s" title="%s"></i>',
+                                     $this->toClassString($this->getClasses()),
+                                     $this->toInlineStyle($this->getStyles()),
+                                     $title);
 
             }
 
-            $this->classes[] = $this->getFlag('pack');
-            $this->classes[] = $this->getFlag('pack') . '-' . $icon;
+            if (isset($url)) {
 
-            if (isset($url)) {
-                  $renderer->doc .= sprintf('<a href="%s" rel="nofollow">', $url);
-            }
-            $renderer->doc .= sprintf('<i class="%s" style="%s" title="%s"></i>',
-                                      $this->toClassString($this->getClasses()),
-                                      $this->toInlineStyle($this->getStyles()),
-                                      $title);
-            if (isset($url)) {
-                  $renderer->doc .= sprintf('</a>');
+              global $conf;
+              global $ID;
+
+              resolve_pageid(getNS($ID), $url, $exists, $this->date_at, true);
+
+              $link['target'] = $conf['target']['wiki'];
+              $link['style']  = '';
+              $link['pre']    = '';
+              $link['suf']    = '';
+              $link['more']   = '';
+              $link['class']  = '';
+              $link['url']    = wl($url);
+              $link['name']   = $icon_markup;
+
+              if ($exists) {
+                $link['class'] = 'wikilink1';
+              } else {
+                $link['class'] = 'wikilink2';
+                $link['rel']   = 'nofollow';
+              }
+
+              $renderer->doc .= $renderer->_formatLink($link);
+
+            } else {
+              $renderer->doc .= $icon_markup;
             }
 
             return true;
@@ -129,7 +163,7 @@ class syntax_plugin_icons_icon extends DokuWiki_Syntax_Plugin {
     protected function toInlineStyle($things) {
 
       $result = '';
-      
+
       foreach ($things as $property => $value) {
         $result .= "$property:$value;";
       }
@@ -244,9 +278,9 @@ class syntax_plugin_icons_icon extends DokuWiki_Syntax_Plugin {
                 $this->styles['padding-'.(($value == 'left') ? 'right' : 'left')] = '.2em';
                 $this->styles['float'] = $value;
               }
-              
+
             }
-            
+
             break;
 
           default:
