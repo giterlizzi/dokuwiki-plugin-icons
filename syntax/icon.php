@@ -52,8 +52,15 @@ class syntax_plugin_icons_icon extends DokuWiki_Syntax_Plugin {
      */ 
     public function handle($match, $state, $pos, Doku_Handler $handler) {
 
+        $url   = null;
+        $flags = array();
+        $title = null;
+        $pack  = null;
+        $icon  = null;
+
         $match = substr($match, 2, -2); // strip markup
-        list($match, $title, $title2) = explode('|', $match);
+
+        @list($match, $title, $title2) = explode('|', $match);
 
         if (isset($title2)) $title .= '}}';
 
