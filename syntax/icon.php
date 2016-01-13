@@ -176,12 +176,12 @@ class syntax_plugin_icons_icon extends DokuWiki_Syntax_Plugin {
   }
 
   protected function isIcon() {
-    $class_icon = get_class($this);
+    $class_icon = sprintf('syntax_plugin_icons_%s', $this->getFlag('pack'));
     return constant("$class_icon::IS_ICON");
   }
 
   protected function isFontIcon() {
-    $class_icon = get_class($this);
+    $class_icon = sprintf('syntax_plugin_icons_%s', $this->getFlag('pack'));
     return constant("$class_icon::IS_FONT_ICON");
   }
 
