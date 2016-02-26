@@ -220,7 +220,7 @@ class syntax_plugin_icons_icon extends DokuWiki_Syntax_Plugin {
     $this->flags['pack'] = $pack;
     $this->flags['icon'] = $icon;
 
-    if ((int) $flags[0] > 0) {
+    if ((int) $flags[0] > 0 && ! in_array($flags[0], array('2x', '3x', '4x', '5x'))) {
       $flags[] = "size=" . $flags[0];
       unset($flags[0]);
     }
@@ -268,8 +268,15 @@ class syntax_plugin_icons_icon extends DokuWiki_Syntax_Plugin {
           break;
 
         case 'border':
-          $this->flags[$flag]     = true;
-          $this->styles['border'] = '0.08em solid #EEE';
+
+          $this->flags[$flag] = true;
+        
+          if ($this->flags['pack'] == 'fa') {
+            $this->classes[] = 'fa-border';
+          } else {
+            $this->styles['border'] = '0.08em solid #EEE';
+          }
+
           break;
 
         case 'borderColor':
@@ -309,10 +316,50 @@ class syntax_plugin_icons_icon extends DokuWiki_Syntax_Plugin {
 
           break;
 
+        case 'rotate':
+
+          if (in_array($value, array(90, 180, 270))) {
+            $this->classes[] = "fa-rotate-$value";
+          }
+
+          break;
+
+        case 'flip':
+
+          if (in_array($value, array('horizontal', 'vertical'))) {
+            $this->classes[] = "fa-flip-$value";
+          }
+
+        break;
+
+        case 'pull-left':
+        case 'pullLeft':
+        case 'pull-right':
+        case 'pullRight':
+        case 'spin':
+        case 'pulse':
+          $this->classes[] = "fa-$flag";
+          break;
+
+        case 'fw':
+        case 'lg':
+        case '2x':
+        case '3x':
+        case '4x':
+        case '5x':
+
+          $this->classes[]     = "fa-$flag";
+          $this->flags['size'] = true;
+
+          unset($this->styles['font-size']);
+          break;
+
+
         default:
           $this->classes[] = $flag;
 
       }
+
     }
 
     if (! isset($this->flags['size'])) {
