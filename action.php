@@ -23,12 +23,7 @@ class action_plugin_icons extends DokuWiki_Action_Plugin {
    * @param  Doku_Event_Handler  $controller
    */
   public function register(Doku_Event_Handler $controller) {
-
-    if ($this->getConf('loadFontAwesome')) {
-      $controller->register_hook('TPL_METAHEADER_OUTPUT', 'BEFORE', $this,
-                                 '_hookcss');
-    }
-
+    $controller->register_hook('TPL_METAHEADER_OUTPUT', 'BEFORE', $this, '_hookcss');
   }
 
   /**
@@ -38,10 +33,22 @@ class action_plugin_icons extends DokuWiki_Action_Plugin {
    */
   public function _hookcss(Doku_Event &$event, $param) {
 
-    $event->data['link'][] = array(
-      'type'    => 'text/css',
-      'rel'     => 'stylesheet',
-      'href'    => $this->getConf('fontAwesomeURL'));
+    $font_icons = array();
+
+    if ($this->getConf('loadFontAwesome')) {
+      $font_icons[] = $this->getConf('fontAwesomeURL');
+    }
+
+    if ($this->getConf('loadTypicon')) {
+      $font_icons[] = $this->getConf('typiconURL');
+    }
+
+    foreach ($font_icons as $font_icon) {
+      $event->data['link'][] = array(
+        'type'    => 'text/css',
+        'rel'     => 'stylesheet',
+        'href'    => $font_icon);
+    }
 
   }
 
