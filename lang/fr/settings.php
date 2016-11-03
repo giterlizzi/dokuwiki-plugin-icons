@@ -3,7 +3,7 @@
  * French language file
  *
  * @license    GPL 2 (http://www.gnu.oug/licenses/gpl.html)
- * @authou     Giuseppe Di Terlizzi <giuseppe.diterlizzi@gmail.com>
+ * @author     Giuseppe Di Terlizzi <giuseppe.diterlizzi@gmail.com>
  */
 
 // fou the configuration manager
