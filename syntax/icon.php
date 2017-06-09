@@ -270,7 +270,7 @@ class syntax_plugin_icons_icon extends DokuWiki_Syntax_Plugin {
         case 'border':
 
           $this->flags[$flag] = true;
-        
+
           if ($this->flags['pack'] == 'fa') {
             $this->classes[] = 'fa-border';
           } else {

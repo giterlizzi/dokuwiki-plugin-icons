@@ -43,6 +43,10 @@ class action_plugin_icons extends DokuWiki_Action_Plugin {
       $font_icons[] = $this->getConf('typiconsURL');
     }
 
+    if ($this->getConf('loadFontlinux')) {
+      $font_icons[] = $this->getConf('fontlinuxURL');
+    }
+
     foreach ($font_icons as $font_icon) {
       $event->data['link'][] = array(
         'type'    => 'text/css',
