@@ -24,6 +24,8 @@ class action_plugin_icons extends DokuWiki_Action_Plugin {
    */
   public function register(Doku_Event_Handler $controller) {
     $controller->register_hook('TPL_METAHEADER_OUTPUT', 'BEFORE', $this, '_hookcss');
+    $controller->register_hook('TOOLBAR_DEFINE', 'AFTER', $this, '_popup_button', array ());
+
   }
 
   /**
@@ -41,6 +43,10 @@ class action_plugin_icons extends DokuWiki_Action_Plugin {
 
     if ($this->getConf('loadTypicon')) {
       $font_icons[] = $this->getConf('typiconURL');
+    }
+
+    if ($this->getConf('loadFontlinux')) {
+      $font_icons[] = $this->getConf('fontlinuxURL');
     }
 
     foreach ($font_icons as $font_icon) {
