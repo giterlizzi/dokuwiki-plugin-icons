@@ -39,8 +39,8 @@ class action_plugin_icons extends DokuWiki_Action_Plugin {
       $font_icons[] = $this->getConf('fontAwesomeURL');
     }
 
-    if ($this->getConf('loadTypicon')) {
-      $font_icons[] = $this->getConf('typiconURL');
+    if ($this->getConf('loadTypicons')) {
+      $font_icons[] = $this->getConf('typiconsURL');
     }
 
     foreach ($font_icons as $font_icon) {
