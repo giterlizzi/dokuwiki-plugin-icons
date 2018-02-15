@@ -7,8 +7,7 @@
  * @copyright  (C) 2015-2018, Giuseppe Di Terlizzi
  */
  
-#if (!defined('DOKU_INC')) define('DOKU_INC', dirname(__FILE__).'/../../../../');
-if (!defined('DOKU_INC')) define('DOKU_INC', '/var/www/htdocs/dokuwiki/');
+if (!defined('DOKU_INC')) define('DOKU_INC', dirname(__FILE__).'/../../../../');
 define('DOKU_MEDIAMANAGER', 1); // needed to get proper CSS/JS
 
 global $lang;
