@@ -17,6 +17,6 @@ class syntax_plugin_icons_fa extends syntax_plugin_icons_icon {
   const IS_ICON      = false;
   const IS_FONT_ICON = true;
 
-  protected $pattern = '{{fa>.+?}}';
+  protected $pattern = '{{fa>.+?}}|{{\sfa>.+?}}';
 
 }

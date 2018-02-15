@@ -17,6 +17,6 @@ class syntax_plugin_icons_typcn extends syntax_plugin_icons_icon {
   const IS_ICON      = false;
   const IS_FONT_ICON = true;
 
-  protected $pattern = '{{typcn>.+?}}';
+  protected $pattern = '{{typcn>.+?}}|{{\stypcn>.+?}}';
 
 }

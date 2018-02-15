@@ -15,7 +15,7 @@ class syntax_plugin_icons_icon extends DokuWiki_Syntax_Plugin {
   const IS_ICON      = null;
   const IS_FONT_ICON = null;
 
-  protected $pattern     = '{{icon>.+?}}';
+  protected $pattern     = '{{icon>.+?}}|{{\sicon>.+?}}';
   protected $linkPattern = '\[\[[^\]\r\n]*\|%s\]\]';
 
   protected $flags   = array();
@@ -81,10 +81,32 @@ class syntax_plugin_icons_icon extends DokuWiki_Syntax_Plugin {
 
     }
 
-    list($match, $flags)  = explode('?', $match, 2);
-    list($pack, $icon)    = explode('>', $match, 2);
+    $align_left   = false;
+    $align_right  = false;
+    $align_center = false;
+    $align_flag   = '';
 
-    return array($pack, $icon, explode('&', $flags), $title, $url, $match, $state, $pos);
+    if (substr($match, 0, 1) == ' ') {
+      $align_right = true;
+      $align_flag  = "align=right";
+    }
+
+    if (substr($match, -1, 1) == ' ') {
+      $align_left = true;
+      $align_flag  = "align=left";
+    }
+
+    if ($align_left && $align_right) {
+      $align_center = true;
+      $align_flag  = "align=center";
+    }
+
+    list($match, $flags)  = explode('?', trim($match), 2);
+    list($pack, $icon)    = explode('>', trim($match), 2);
+
+    $flags .= "&$align_flag";
+
+    return array($pack, $icon, explode('&', rtrim($flags, '&')), $title, $url, $match, $state, $pos);
 
   }
 
@@ -118,13 +140,31 @@ class syntax_plugin_icons_icon extends DokuWiki_Syntax_Plugin {
 
     } else {
 
-      $this->classes[] = $this->getFlag('pack');
-      $this->classes[] = sprintf('%s-%s', $this->getFlag('pack'), $icon);
+      if ($this->getFlag('pack') == 'material') {
 
-      $icon_markup = sprintf('<i class="%s" style="%s" title="%s"></i>',
-                             $this->toClassString($this->getClasses()),
-                             $this->toInlineStyle($this->getStyles()),
-                             $title);
+        $this->classes[] = 'material-icons';
+
+        # Material Icons use ligatures feature supported in most modern browsers
+        # on both desktop and mobile devices.
+
+        $icon_markup = sprintf('<i class="%s" style="%s" title="%s">%s</i>',
+                              $this->toClassString($this->getClasses()),
+                              $this->toInlineStyle($this->getStyles()),
+                              $title, $icon);
+
+      } else {
+
+        $this->classes[] = $this->getFlag('pack');
+        $this->classes[] = sprintf('%s-%s', $this->getFlag('pack'), $icon);
+
+
+        $icon_markup = sprintf('<i class="%s" style="%s" title="%s"></i>',
+                              $this->toClassString($this->getClasses()),
+                              $this->toInlineStyle($this->getStyles()),
+                              $title);
+
+      }
+
 
     }
 

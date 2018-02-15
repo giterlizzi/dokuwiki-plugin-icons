@@ -17,7 +17,7 @@ class syntax_plugin_icons_fugue extends syntax_plugin_icons_icon {
   const IS_ICON      = true;
   const IS_FONT_ICON = false;
 
-  protected $pattern = '{{fugue>.+?}}';
+  protected $pattern = '{{fugue>.+?}}|{{\sfugue>.+?}}';
 
   public static function makePath($icon, $size, $base_url) {
 

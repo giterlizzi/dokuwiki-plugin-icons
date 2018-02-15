@@ -10,7 +10,6 @@
 // for the configuration manager
 $lang['defaultSize']     = 'Standard Größe der Icons';
 $lang['defaultPack']     = 'Default icon package';
-$lang['fontAwesomeURL']  = 'Font Awesome CSS URL (CDN oder local)';
 $lang['fugueURL']        = 'Fugue Basis Pfad URL (CDN oder local)';
 $lang['oxygenURL']       = 'Oxygen Basis Pfad URL (CDN oder local)';
 $lang['loadFontAwesome'] = 'Soll die css Datei von Font Awesome geladen werden?';

@@ -6,7 +6,6 @@
 */
 $lang['defaultSize']     = 'デフォルトアイコンサイズ';
 $lang['defaultPack']     = 'デフォルトアイコン集';
-$lang['fontAwesomeURL']  = 'Font Awesome の CSS URL（CDN 又は local）';
 $lang['fugueURL']        = 'Fugue の URL（CDN 又は local）';
 $lang['oxygenURL']       = 'Oxygen の URL（CDN 又は local）';
 $lang['loadFontAwesome'] = 'Font Awesome の CSS ファイルを読込みますか？';

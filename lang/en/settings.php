@@ -7,15 +7,23 @@
  */
 
 // for the configuration manager
-$lang['defaultSize']     = 'Default size for icon';
-$lang['defaultPack']     = 'Default icon package';
-$lang['fontAwesomeURL']  = 'Font Awesome CSS URL (CDN or local)';
-$lang['typiconsURL']     = 'Typicons CSS URL (CDN or local)';
-$lang['fontlinuxURL']    = 'Font-Linux CSS URL (CDN or local)';
-$lang['fugueURL']        = 'Fugue base path URL (CDN or local)';
-$lang['oxygenURL']       = 'Oxygen base path URL (CDN or local)';
-$lang['loadFontAwesome'] = 'Do you want load the CSS file of Font Awesome ?';
-$lang['loadTypicons']    = 'Do you want load the CSS file of Typicons ?';
-$lang['loadFontlinux']   = 'Do you want load the CSS file of Font-Linux ?';
-$lang['silkURL']         = 'Silk base path URL (CDN or local)';
-$lang['flagURL']         = 'Flag base path URL (CDN or local)';
+$lang['defaultPack']             = 'Default icon package';
+$lang['defaultPack_o_fa']        = 'Font-Awesome';
+$lang['defaultPack_o_fl']        = 'Font-Linux';
+$lang['defaultPack_o_fugue']     = 'Fugue';
+$lang['defaultPack_o_glyphicon'] = 'Glyphicon';
+$lang['defaultPack_o_material']  = 'Material Icons';
+$lang['defaultPack_o_oxygen']    = 'Oxygen';
+$lang['defaultPack_o_ra']        = 'RPG-Awesome';
+$lang['defaultPack_o_typcn']     = 'Typicons';
+$lang['defaultSize']             = 'Default size for icon';
+$lang['flagURL']                 = 'Flag base path URL (CDN or local)';
+$lang['fugueURL']                = 'Fugue base path URL (CDN or local)';
+$lang['loadFontAwesome']         = 'Do you want load the CSS file of Font-Awesome ?';
+$lang['loadFontlinux']           = 'Do you want load the CSS file of Font-Linux ?';
+$lang['loadMaterialIcons']       = 'Do you want load the CSS file of Material Icons ?';
+$lang['loadRpgAwesome']          = 'Do you want load the CSS file of RPG-Awesome ?';
+$lang['loadTypicons']            = 'Do you want load the CSS file of Typicons ?';
+$lang['oxygenURL']               = 'Oxygen base path URL (CDN or local)';
+$lang['silkURL']                 = 'Silk base path URL (CDN or local)';
+
