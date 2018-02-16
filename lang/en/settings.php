@@ -6,7 +6,6 @@
  * @author     Giuseppe Di Terlizzi <giuseppe.diterlizzi@gmail.com>
  */
 
-// for the configuration manager
 $lang['defaultPack']             = 'Default icon package';
 $lang['defaultPack_o_fa']        = 'Font-Awesome';
 $lang['defaultPack_o_fl']        = 'Font-Linux';
@@ -19,11 +18,11 @@ $lang['defaultPack_o_typcn']     = 'Typicons';
 $lang['defaultSize']             = 'Default size for icon';
 $lang['flagURL']                 = 'Flag base path URL (CDN or local)';
 $lang['fugueURL']                = 'Fugue base path URL (CDN or local)';
-$lang['loadFontAwesome']         = 'Do you want load the CSS file of Font-Awesome ?';
-$lang['loadFontlinux']           = 'Do you want load the CSS file of Font-Linux ?';
-$lang['loadMaterialIcons']       = 'Do you want load the CSS file of Material Icons ?';
-$lang['loadRpgAwesome']          = 'Do you want load the CSS file of RPG-Awesome ?';
-$lang['loadTypicons']            = 'Do you want load the CSS file of Typicons ?';
+$lang['loadFontAwesome']         = 'Load Font-Awesome';
+$lang['loadFontlinux']           = 'Load Font-Linux';
+$lang['loadMaterialIcons']       = 'Load Material Icons';
+$lang['loadRpgAwesome']          = 'Load RPG-Awesome';
+$lang['loadTypicons']            = 'Load Typicons';
 $lang['oxygenURL']               = 'Oxygen base path URL (CDN or local)';
 $lang['silkURL']                 = 'Silk base path URL (CDN or local)';
 
