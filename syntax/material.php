@@ -1,6 +1,6 @@
 <?php
 /**
- * Plugin Icons: Font-Awesome helper
+ * Plugin Icons: Material Icons helper
  *
  * @license    GPL 2 (http://www.gnu.org/licenses/gpl.html)
  * @author     Giuseppe Di Terlizzi <giuseppe.diterlizzi@gmail.com>
@@ -12,11 +12,11 @@ if(!defined('DOKU_INC')) die();
 
 require_once(dirname(__FILE__).'/icon.php');
 
-class syntax_plugin_icons_fa extends syntax_plugin_icons_icon {
+class syntax_plugin_icons_material extends syntax_plugin_icons_icon {
 
   const IS_ICON      = false;
   const IS_FONT_ICON = true;
 
-  protected $pattern = '{{fa>.+?}}|{{\sfa>.+?}}';
+  protected $pattern = '{{material>.+?}}|{{\smaterial>.+?}}';
 
 }

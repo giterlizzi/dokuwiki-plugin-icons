@@ -1,23 +1,23 @@
 <?php
 /**
- * Default settings for the icons plugin
+ * Default settings for Icons Plugin
  *
- * @author Giuseppe Di Terlizzi <giuseppe.diterlizzi@gmail.com>
+ * @license    GPL 2 (http://www.gnu.org/licenses/gpl.html)
+ * @author     Giuseppe Di Terlizzi <giuseppe.diterlizzi@gmail.com>
+ * @copyright  (C) 2015-2018, Giuseppe Di Terlizzi
  */
 
-$conf['defaultSize']     = '16';
-$conf['defaultPack']     = 'fa';
+$conf['defaultSize']       = '16';
+$conf['defaultPack']       = 'fa';
 
-$conf['fontAwesomeURL']  = 'https://maxcdn.bootstrapcdn.com/font-awesome/4.7.0/css/font-awesome.min.css';
-$conf['loadFontAwesome'] = 1;
+$conf['fugueURL']          = 'https://cdn.rawgit.com/yusukekamiyamane/fugue-icons/master';
+$conf['oxygenURL']         = 'https://cdn.rawgit.com/KDE/oxygen-icons/tree/master';
+$conf['breeezeURL']        = 'https://cdn.rawgit.com/KDE/breeze-icons/tree/master/icons';
+$conf['silkURL']           = 'http://icons.iconarchive.com/icons/famfamfam/silk/16';
+$conf['flagURL']           = 'http://icons.iconarchive.com/icons/famfamfam/flag/16';
 
-$conf['typiconsURL']     = 'https://cdn.rawgit.com/stephenhutchings/typicons.font/master/src/font/typicons.min.css';
-$conf['loadTypicons']    = 0;
-
-$conf['fontlinuxURL']    = 'https://cdn.rawgit.com/Lukas-W/font-linux/v0.9/assets/font-linux.css';
-$conf['loadFontlinux']   = 0;
-
-$conf['fugueURL']        = 'https://raw.githubusercontent.com/yusukekamiyamane/fugue-icons/master';
-$conf['oxygenURL']       = 'https://raw.githubusercontent.com/pasnox/oxygen-icons-png/master/oxygen';
-$conf['silkURL']         = 'http://icons.iconarchive.com/icons/famfamfam/silk/16';
-$conf['flagURL']         = 'http://icons.iconarchive.com/icons/famfamfam/flag/16';
+$conf['loadMaterialIcons'] = 1;
+$conf['loadFontlinux']     = 1;
+$conf['loadTypicons']      = 1;
+$conf['loadFontAwesome']   = 1;
+$conf['loadRpgAwesome']    = 1;
