@@ -8,7 +8,7 @@
  */
 
 $meta['defaultSize']       = array('string');
-$meta['defaultPack']       = array('multichoice','_choices' => array('fa', 'ra', 'typcn', 'glyphicon', 'fugue', 'oxygen', 'fl', 'material'));
+$meta['defaultPack']       = array('multichoice','_choices' => array('fa', 'ra', 'typcn', 'glyphicon', 'fl', 'material', 'fugue', 'oxygen', 'breeze'));
 
 $meta['loadFontAwesome']   = array('onoff');
 $meta['loadTypicons']      = array('onoff');
@@ -18,5 +18,6 @@ $meta['loadRpgAwesome']    = array('onoff');
 
 $meta['fugueURL']          = array('string');
 $meta['oxygenURL']         = array('string');
+$meta['breezeURL']         = array('string');
 $meta['silkURL']           = array('string');
 $meta['flagURL']           = array('string');

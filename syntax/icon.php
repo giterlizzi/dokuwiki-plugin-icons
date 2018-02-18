@@ -129,14 +129,15 @@ class syntax_plugin_icons_icon extends DokuWiki_Syntax_Plugin {
 
     if ($this->isIcon()) {
 
-      $icon_size   = $this->getFlag('size');
-      $icon_pack   = $this->getFlag('pack');
-      $base_path   = rtrim($this->getConf(sprintf('%sURL', $icon_pack)), '/');
-      $icon_path   = $this->makePath($icon, $icon_size, $base_path);
-      $icon_markup = sprintf('<img src="%s" title="%s" class="%s" style="%s" />',
-                             $icon_path, $title,
-                             $this->toClassString($this->getClasses()),
-                             $this->toInlineStyle($this->getStyles()));
+      $icon_size       = $this->getFlag('size');
+      $icon_pack       = $this->getFlag('pack');
+      $icon_base_url   = rtrim($this->getConf(sprintf('%sURL', $icon_pack)), '/');
+      $icon_url        = $this->makePath($icon, $icon_size, $icon_base_url);
+      $cached_icon_url = ml($icon_url, array('cache' => 'recache', 'w' => $icon_size, 'h' => $icon_size));
+      $icon_markup     = sprintf('<img src="%s" title="%s" class="%s" style="%s" />',
+                                  $cached_icon_url, $title,
+                                  $this->toClassString($this->getClasses()),
+                                  $this->toInlineStyle($this->getStyles()));
 
     } else {
 

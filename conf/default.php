@@ -10,8 +10,9 @@
 $conf['defaultSize']       = '16';
 $conf['defaultPack']       = 'fa';
 
-$conf['fugueURL']          = 'https://raw.githubusercontent.com/yusukekamiyamane/fugue-icons/master';
-$conf['oxygenURL']         = 'https://raw.githubusercontent.com/pasnox/oxygen-icons-png/master/oxygen';
+$conf['fugueURL']          = 'https://cdn.rawgit.com/yusukekamiyamane/fugue-icons/master';
+$conf['oxygenURL']         = 'https://cdn.rawgit.com/KDE/oxygen-icons/tree/master';
+$conf['breeezeURL']        = 'https://cdn.rawgit.com/KDE/breeze-icons/tree/master/icons';
 $conf['silkURL']           = 'http://icons.iconarchive.com/icons/famfamfam/silk/16';
 $conf['flagURL']           = 'http://icons.iconarchive.com/icons/famfamfam/flag/16';
 

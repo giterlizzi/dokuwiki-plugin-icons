@@ -1,6 +1,6 @@
 <?php
 /**
- * Plugin Icons: Font Awesome helper
+ * Plugin Icons: Font-Awesome helper
  *
  * @license    GPL 2 (http://www.gnu.org/licenses/gpl.html)
  * @author     Giuseppe Di Terlizzi <giuseppe.diterlizzi@gmail.com>
