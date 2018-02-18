@@ -149,10 +149,6 @@ header('X-UA-Compatible: IE=edge,chrome=1');
 
         var syntax = [ '{{' ];
 
-        if ( icon_align == 'right' || icon_align == 'center') {
-          syntax.push(' ');
-        }
-
         syntax.push(icon_pack);
         syntax.push('>' + icon_name);
 
@@ -174,8 +170,8 @@ header('X-UA-Compatible: IE=edge,chrome=1');
           syntax.push('?' + icon_size_pixel);
         }
 
-        if ( icon_align == 'left' || icon_align == 'center') {
-          syntax.push(' ');
+        if (icon_align) {
+          syntax.push('&align=' + icon_align);
         }
 
         syntax.push('}}');

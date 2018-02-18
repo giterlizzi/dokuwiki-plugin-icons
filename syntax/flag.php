@@ -17,7 +17,7 @@ class syntax_plugin_icons_flag extends syntax_plugin_icons_icon {
   const IS_ICON      = true;
   const IS_FONT_ICON = false;
 
-  protected $pattern = '{{flag>.+?}}|{{\sflag>.+?}}';
+  protected $pattern = '{{flag>.+?}}';
 
   public static function makePath($icon, $size, $base_url) {
 

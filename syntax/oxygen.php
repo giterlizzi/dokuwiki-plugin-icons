@@ -17,7 +17,7 @@ class syntax_plugin_icons_oxygen extends syntax_plugin_icons_icon {
   const IS_ICON      = true;
   const IS_FONT_ICON = false;
 
-  protected $pattern = '{{oxygen>.+?}}|{{\soxygen>.+?}}';
+  protected $pattern = '{{oxygen>.+?}}';
 
   public static function makePath($icon, $size, $base_url) {
 

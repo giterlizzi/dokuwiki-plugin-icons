@@ -15,7 +15,7 @@ class syntax_plugin_icons_icon extends DokuWiki_Syntax_Plugin {
   const IS_ICON      = null;
   const IS_FONT_ICON = null;
 
-  protected $pattern     = '{{icon>.+?}}|{{\sicon>.+?}}';
+  protected $pattern     = '{{icon>.+?}}';
   protected $linkPattern = '\[\[[^\]\r\n]*\|%s\]\]';
 
   protected $flags   = array();

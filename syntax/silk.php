@@ -17,7 +17,7 @@ class syntax_plugin_icons_silk extends syntax_plugin_icons_icon {
     const IS_ICON      = true;
     const IS_FONT_ICON = false;
 
-    protected $pattern = '{{silk>.+?}}|{{\ssilk>.+?}}';
+    protected $pattern = '{{silk>.+?}}';
 
     public static function makePath($icon, $size, $base_url) {
       return "$base_url/$icon-icon.png";
