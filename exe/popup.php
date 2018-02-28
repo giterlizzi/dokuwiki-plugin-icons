@@ -343,13 +343,13 @@ header('X-UA-Compatible: IE=edge,chrome=1');
           <label>Alignment</label>
           <div class="btn-group btn-group-xs">
             <button class="button btn btn-default active" data-icon-align="" title="Use no align">
-              <img src="http://localhost/dokuwiki/lib/images/media_align_noalign.png" />
+              <img src="../../../images/media_align_noalign.png" />
             </button><button class="button btn btn-default" data-icon-align="left" title="Align the icon on the left">
-              <img src="http://localhost/dokuwiki/lib/images/media_align_left.png" />
+              <img src="../../../images/media_align_left.png" />
             </button><button class="button btn btn-default" data-icon-align="center" title="Align the icon in the center">
-              <img src="http://localhost/dokuwiki/lib/images/media_align_center.png" />
+              <img src="../../../images/media_align_center.png" />
             </button><button class="button btn btn-default" data-icon-align="right" title="Align the icon on the right">
-              <img src="http://localhost/dokuwiki/lib/images/media_align_right.png" />
+              <img src="../../../images/media_align_right.png" />
             </button>
           </div>
         </div>
@@ -358,13 +358,13 @@ header('X-UA-Compatible: IE=edge,chrome=1');
           <label>Image size</label>
           <div class="btn-group btn-group-xs">
             <button class="button btn btn-default" data-icon-size="small" title="Small size">
-              <img src="http://localhost/dokuwiki/lib/images/media_size_small.png" />
+              <img src="../../../images/media_size_small.png" />
             </button><button class="button btn btn-default" data-icon-size="medium" title="Medium size">
-              <img src="http://localhost/dokuwiki/lib/images/media_size_medium.png" />
+              <img src="../../../images/media_size_medium.png" />
             </button><button class="button btn btn-default" data-icon-size="large" title="Large size">
-              <img src="http://localhost/dokuwiki/lib/images/media_size_large.png" />
+              <img src="../../../images/media_size_large.png" />
             </button><button class="button btn btn-default active" data-icon-size="original" title="Original size">
-              <img src="http://localhost/dokuwiki/lib/images/media_size_original.png" />
+              <img src="../../../images/media_size_original.png" />
             </button>
           </div>
         </div>
