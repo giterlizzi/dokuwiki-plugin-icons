@@ -13,4 +13,4 @@ env:
   - DOKUWIKI=old-stable
 before_install: wget https://raw.github.com/splitbrain/dokuwiki-travis/master/travis.sh
 install: sh travis.sh
-script: cd _test && phpunit --bootstrap ../../../../_test/bootstrap.php --stderr --group plugin_icons
+script: cd _test && phpunit --bootstrap ../../../_test/bootstrap.php --stderr --group plugin_icons
