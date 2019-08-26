@@ -4,9 +4,9 @@
  * 
  * @license    GPL 2 (http://www.gnu.org/licenses/gpl.html)
  * @author     Giuseppe Di Terlizzi <giuseppe.diterlizzi@gmail.com>
- * @copyright  (C) 2015-2018, Giuseppe Di Terlizzi
+ * @copyright  (C) 2015-2019, Giuseppe Di Terlizzi
  */
- 
+
 if (!defined('DOKU_INC')) define('DOKU_INC', dirname(__FILE__).'/../../../../');
 define('DOKU_MEDIAMANAGER', 1); // needed to get proper CSS/JS
 
@@ -29,12 +29,12 @@ session_write_close();  //close session
 
 $icons_plugin = plugin_load('action','icons');
 
-$use_font_awesome   = $icons_plugin->getConf('loadFontAwesome');
-$use_material_icons = $icons_plugin->getConf('loadMaterialIcons');
-$use_typicons       = $icons_plugin->getConf('loadTypicons');
-$use_font_linux     = $icons_plugin->getConf('loadFontlinux');
-$use_rpg_awesome    = $icons_plugin->getConf('loadRpgAwesome');
-$use_glyphicons     = false;
+$use_font_awesome          = $icons_plugin->getConf('loadFontAwesome');
+$use_material_design_icons = $icons_plugin->getConf('loadMaterialDesignIcons');
+$use_typicons              = $icons_plugin->getConf('loadTypicons');
+$use_font_linux            = $icons_plugin->getConf('loadFontlinux');
+$use_rpg_awesome           = $icons_plugin->getConf('loadRpgAwesome');
+$use_glyphicons            = false;
 
 # Load Bootstrap3 Template assets
 if ($conf['template'] == 'bootstrap3') {
@@ -42,17 +42,17 @@ if ($conf['template'] == 'bootstrap3') {
   include_once(DOKU_INC.'lib/tpl/bootstrap3/tpl_functions.php');
   include_once(DOKU_INC.'lib/tpl/bootstrap3/tpl_global.php');
 
-  # Glyphicons if bundled into Bootstrap 3.x
+  # Glyphicons is bundled into Bootstrap 3.x
   $use_glyphicons = true;
 
 }
 
-$list_material_icons = include(dirname(__FILE__) . '/list-material-icons.php');
-$list_font_awesome   = include(dirname(__FILE__) . '/list-font-awesome.php');
-$list_glyphicon      = include(dirname(__FILE__) . '/list-glyphicon.php');
-$list_typicons       = include(dirname(__FILE__) . '/list-typicons.php');
-$list_font_linux     = include(dirname(__FILE__) . '/list-font-linux.php');
-$list_rpg_awesome    = include(dirname(__FILE__) . '/list-rpg-awesome.php');
+$list_material_design_icons = include(dirname(__FILE__) . '/list-material-design-icons.php');
+$list_font_awesome          = include(dirname(__FILE__) . '/list-font-awesome.php');
+$list_glyphicon             = include(dirname(__FILE__) . '/list-glyphicon.php');
+$list_typicons              = include(dirname(__FILE__) . '/list-typicons.php');
+$list_font_linux            = include(dirname(__FILE__) . '/list-font-linux.php');
+$list_rpg_awesome           = include(dirname(__FILE__) . '/list-rpg-awesome.php');
 
 header('Content-Type: text/html; charset=utf-8');
 header('X-UA-Compatible: IE=edge,chrome=1');
@@ -71,9 +71,11 @@ header('X-UA-Compatible: IE=edge,chrome=1');
     body { padding: 20px; }
     .btn-icon { margin: 4px; padding: 4px; }
     .tab-icons { overflow-y: auto; height: 300px; }
+    .icon { font-size: 2em; width: 1.28571429em; text-align: center; }
     <?php if (! $use_glyphicons): ?>
     footer { bottom: 20px; position: fixed; }
     .col-sm-6 { width:50%; float: left; }
+    .col-sm-4 { width:33.3%; float: left; }
     .tab-pane, .hide { display: none; }
     button.active { border-style: inset; }
     <?php endif; ?>
@@ -220,9 +222,9 @@ header('X-UA-Compatible: IE=edge,chrome=1');
       <a data-toggle="tab" href="#tab-glyphicon" data-pack="glyphicon">Glyphicons</a>
     </li>
     <?php endif; ?>
-    <?php if ($use_material_icons): ?>
+    <?php if ($use_material_design_icons): ?>
     <li>
-      <a data-toggle="tab" href="#tab-material" data-pack="material">Material Icons</a>
+      <a data-toggle="tab" href="#tab-mdi" data-pack="mdi">Material Design Icons</a>
     </li>
     <?php endif; ?>
     <?php if ($use_typicons): ?>
@@ -237,7 +239,7 @@ header('X-UA-Compatible: IE=edge,chrome=1');
     <?php endif; ?>
     <?php if ($use_rpg_awesome): ?>
     <li>
-      <a data-toggle="tab" href="#tab-rpg-awesome" data-pack="fl">RPG-Awesome</a>
+      <a data-toggle="tab" href="#tab-rpg-awesome" data-pack="fa">RPG-Awesome</a>
     </li>
     <?php endif; ?>
 
@@ -249,7 +251,7 @@ header('X-UA-Compatible: IE=edge,chrome=1');
 
       <div class="row tab-icons">
         <?php foreach($list_font_awesome as $icon): ?>
-          <div class="col-sm-6">
+          <div class="col-sm-4">
             <button class="btn btn-default btn-xs btn-icon" title="<?php echo $icon ?>" data-icon-name="<?php echo $icon ?>">
               <i class="fa fa-fw fa-2x fa-<?php echo $icon ?>"></i>
             </button>
@@ -264,7 +266,7 @@ header('X-UA-Compatible: IE=edge,chrome=1');
 
       <div class="row tab-icons">
         <?php foreach($list_rpg_awesome as $icon): ?>
-          <div class="col-sm-6">
+          <div class="col-sm-4">
             <button class="btn btn-default btn-xs btn-icon" title="<?php echo $icon ?>" data-icon-name="<?php echo $icon ?>">
               <i class="ra ra-fw ra-2x ra-<?php echo $icon ?>"></i>
             </button>
@@ -275,12 +277,14 @@ header('X-UA-Compatible: IE=edge,chrome=1');
 
     </div>
 
-    <div id="tab-material" class="tab-pane fade">
+    <div id="tab-mdi" class="tab-pane fade">
 
       <div class="row tab-icons">
-        <?php foreach($list_material_icons as $icon): ?>
-          <div class="col-sm-6">
-            <button class="btn btn-default btn-xs btn-icon material-icons" title="<?php echo $icon ?>" data-icon-name="<?php echo $icon ?>"><?php echo $icon ?></button>
+        <?php foreach($list_material_design_icons as $icon): ?>
+          <div class="col-sm-4">
+            <button class="btn btn-default btn-xs btn-icon" title="<?php echo $icon ?>" data-icon-name="<?php echo $icon ?>">
+              <i class="icon mdi mdi-<?php echo $icon ?>"></i>
+            </button>
             <small><?php echo $icon ?></small>
           </div>
         <?php endforeach ?>
@@ -292,9 +296,9 @@ header('X-UA-Compatible: IE=edge,chrome=1');
 
       <div class="row tab-icons">
         <?php foreach($list_glyphicon as $icon): ?>
-          <div class="col-sm-6">
+          <div class="col-sm-4">
             <button class="btn btn-default btn-xs btn-icon" title="<?php echo $icon ?>" data-icon-name="<?php echo $icon ?>">
-              <i class="fa-fw fa-2x glyphicon glyphicon-<?php echo $icon ?>"></i>
+              <i class="icon glyphicon glyphicon-<?php echo $icon ?>"></i>
             </button>
             <small><?php echo $icon ?></small>
           </div>
@@ -307,7 +311,7 @@ header('X-UA-Compatible: IE=edge,chrome=1');
 
       <div class="row tab-icons">
         <?php foreach($list_typicons as $icon): ?>
-          <div class="col-sm-6">
+          <div class="col-sm-4">
             <button class="btn btn-default btn-xs btn-icon" title="<?php echo $icon ?>" data-icon-name="<?php echo $icon ?>">
               <i class="fa-fw fa-2x typcn typcn-<?php echo $icon ?>"></i>
             </button>
@@ -322,9 +326,9 @@ header('X-UA-Compatible: IE=edge,chrome=1');
 
       <div class="row tab-icons">
         <?php foreach($list_font_linux as $icon): ?>
-          <div class="col-sm-6">
+          <div class="col-sm-4">
             <button class="btn btn-default btn-xs btn-icon" title="<?php echo $icon ?>" data-icon-name="<?php echo $icon ?>">
-              <i class="fa-fw fa-2x fl fl-<?php echo $icon ?>"></i>
+              <i class="icon fl fl-<?php echo $icon ?>"></i>
             </button>
             <small><?php echo $icon ?></small>
           </div>

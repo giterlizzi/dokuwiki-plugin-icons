@@ -12,11 +12,11 @@ if(!defined('DOKU_INC')) die();
 
 require_once(dirname(__FILE__).'/icon.php');
 
-class syntax_plugin_icons_material extends syntax_plugin_icons_icon {
+class syntax_plugin_icons_mdi extends syntax_plugin_icons_icon {
 
   const IS_ICON      = false;
   const IS_FONT_ICON = true;
 
-  protected $pattern = '{{material>.+?}}';
+  protected $pattern = '{{mdi>.+?}}';
 
 }

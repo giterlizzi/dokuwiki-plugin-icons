@@ -16,8 +16,8 @@ $conf['breeezeURL']        = 'https://raw.githubusercontent.com/KDE/breeze-icons
 $conf['silkURL']           = 'http://icons.iconarchive.com/icons/famfamfam/silk/16';
 $conf['flagURL']           = 'http://icons.iconarchive.com/icons/famfamfam/flag/16';
 
-$conf['loadMaterialIcons'] = 1;
-$conf['loadFontlinux']     = 1;
-$conf['loadTypicons']      = 1;
-$conf['loadFontAwesome']   = 1;
-$conf['loadRpgAwesome']    = 1;
+$conf['loadMaterialDesignIcons'] = 1;
+$conf['loadFontlinux']           = 0;
+$conf['loadTypicons']            = 0;
+$conf['loadFontAwesome']         = 1;
+$conf['loadRpgAwesome']          = 0;

@@ -141,30 +141,14 @@ class syntax_plugin_icons_icon extends DokuWiki_Syntax_Plugin {
 
     } else {
 
-      if ($this->getFlag('pack') == 'material') {
-
-        $this->classes[] = 'material-icons';
-
-        # Material Icons use ligatures feature supported in most modern browsers
-        # on both desktop and mobile devices.
-
-        $icon_markup = sprintf('<i class="%s" style="%s" title="%s">%s</i>',
-                              $this->toClassString($this->getClasses()),
-                              $this->toInlineStyle($this->getStyles()),
-                              $title, $icon);
-
-      } else {
-
-        $this->classes[] = $this->getFlag('pack');
-        $this->classes[] = sprintf('%s-%s', $this->getFlag('pack'), $icon);
+      $this->classes[] = $this->getFlag('pack');
+      $this->classes[] = sprintf('%s-%s', $this->getFlag('pack'), $icon);
 
 
-        $icon_markup = sprintf('<i class="%s" style="%s" title="%s"></i>',
-                              $this->toClassString($this->getClasses()),
-                              $this->toInlineStyle($this->getStyles()),
-                              $title);
-
-      }
+      $icon_markup = sprintf('<i class="dw-icons %s" style="%s" title="%s"></i>',
+                            $this->toClassString($this->getClasses()),
+                            $this->toInlineStyle($this->getStyles()),
+                            $title);
 
 
     }
