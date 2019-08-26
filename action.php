@@ -73,7 +73,7 @@ class action_plugin_icons extends DokuWiki_Action_Plugin {
     $font_icons = array();
 
     # Load Font-Awesome (skipped for Bootstrap3 template)
-    if ($this->getConf('loadFontAwesome') && $conf['template'] !== 'bootstrap3') {
+    if ($this->getConf('loadFontAwesome')) {
       $font_icons[] = "$base_url/font-awesome/css/font-awesome.min.css";
     }
 
@@ -93,8 +93,8 @@ class action_plugin_icons extends DokuWiki_Action_Plugin {
     }
 
     # Load Material Icons
-    if ($this->getConf('loadMaterialIcons')) {
-      $font_icons[] = "$base_url/material-icons/material-icons.css";
+    if ($this->getConf('loadMaterialDesignIcons')) {
+      $font_icons[] = "$base_url/material-design-icons/css/materialdesignicons.min.css";
     }
 
 
