@@ -1,33 +1,40 @@
 <?php
 /**
  * Plugin Icons: Popup helper
- * 
+ *
  * @license    GPL 2 (http://www.gnu.org/licenses/gpl.html)
  * @author     Giuseppe Di Terlizzi <giuseppe.diterlizzi@gmail.com>
  * @copyright  (C) 2015-2019, Giuseppe Di Terlizzi
  */
 
-if (!defined('DOKU_INC')) define('DOKU_INC', dirname(__FILE__).'/../../../../');
+
+if (!defined('DOKU_INC')) {
+    define('DOKU_INC', dirname(__FILE__) . '/../../../../');
+}
+
 define('DOKU_MEDIAMANAGER', 1); // needed to get proper CSS/JS
 
 global $lang;
 global $conf;
 global $JSINFO;
+global $INPUT;
 
-require_once(DOKU_INC.'inc/init.php');
-require_once(DOKU_INC.'inc/template.php');
-require_once(DOKU_INC.'inc/lang/en/lang.php');
-require_once(DOKU_INC.'inc/lang/'.$conf['lang'].'/lang.php');
+require_once DOKU_INC . 'inc/init.php';
+require_once DOKU_INC . 'inc/template.php';
+require_once DOKU_INC . 'inc/lang/en/lang.php';
+require_once DOKU_INC . 'inc/lang/' . $conf['lang'] . '/lang.php';
 
 $JSINFO['id']        = '';
 $JSINFO['namespace'] = '';
 
 $tmp = array();
 trigger_event('MEDIAMANAGER_STARTED', $tmp);
-session_write_close();  //close session
+session_write_close(); //close session
 
+$icons_plugin = plugin_load('action', 'icons');
 
-$icons_plugin = plugin_load('action','icons');
+$popup_url = DOKU_BASE . 'lib/plugins/icons/exe/popup.php';
+$pack      = $INPUT->str('pack');
 
 $use_font_awesome          = $icons_plugin->getConf('loadFontAwesome');
 $use_material_design_icons = $icons_plugin->getConf('loadMaterialDesignIcons');
@@ -39,20 +46,28 @@ $use_glyphicons            = false;
 # Load Bootstrap3 Template assets
 if ($conf['template'] == 'bootstrap3') {
 
-  include_once(DOKU_INC.'lib/tpl/bootstrap3/tpl_functions.php');
-  include_once(DOKU_INC.'lib/tpl/bootstrap3/tpl_global.php');
+    include_once DOKU_INC . 'lib/tpl/bootstrap3/tpl_functions.php';
+    include_once DOKU_INC . 'lib/tpl/bootstrap3/tpl_global.php';
 
-  # Glyphicons is bundled into Bootstrap 3.x
-  $use_glyphicons = true;
+    # Glyphicons is bundled into Bootstrap 3.x
+    $use_glyphicons = true;
 
 }
 
-$list_material_design_icons = include(dirname(__FILE__) . '/list-material-design-icons.php');
-$list_font_awesome          = include(dirname(__FILE__) . '/list-font-awesome.php');
-$list_glyphicon             = include(dirname(__FILE__) . '/list-glyphicon.php');
-$list_typicons              = include(dirname(__FILE__) . '/list-typicons.php');
-$list_font_linux            = include(dirname(__FILE__) . '/list-font-linux.php');
-$list_rpg_awesome           = include(dirname(__FILE__) . '/list-rpg-awesome.php');
+$collections_dir    = dirname(__FILE__) . '/../assets/iconify/json';
+$collections        = json_decode(file_get_contents(dirname(__FILE__) . '/../assets/iconify/collections.json'), true);
+$custom_collections = json_decode(file_get_contents(dirname(__FILE__) . '/../assets/iconify/custom-collections.json'), true);
+
+$collections = array_merge($collections, $custom_collections);
+$categories  = array();
+
+ksort($collections);
+
+foreach ($collections as $collection => $data) {
+    $categories[$data['category']][] = $collection;
+}
+
+ksort($categories);
 
 header('Content-Type: text/html; charset=utf-8');
 header('X-UA-Compatible: IE=edge,chrome=1');
@@ -66,19 +81,27 @@ header('X-UA-Compatible: IE=edge,chrome=1');
   <script>(function(H){H.className=H.className.replace(/\bno-js\b/,'js')})(document.documentElement)</script>
   <meta name="viewport" content="width=device-width,initial-scale=1" />
   <?php echo tpl_favicon(array('favicon', 'mobile')) ?>
-  <?php tpl_metaheaders() ?>
+  <?php tpl_metaheaders()?>
   <style type="text/css">
     body { padding: 20px; }
+    main {  width: 75%; float:left; }
+    aside { width: 25%; float:left; overflow-y: scroll; height: 500px; }
     .btn-icon { margin: 4px; padding: 4px; }
-    .tab-icons { overflow-y: auto; height: 300px; }
-    .icon { font-size: 2em; width: 1.28571429em; text-align: center; }
-    <?php if (! $use_glyphicons): ?>
+    .collections { padding: 5px; }
+    .collection-samples { margin-bottom: 10px; }
+    .collection-category { margin-top: 10px; }
+    .collection-name { margin-left: 10px; }
+    .collection-box, .preview-box { padding: 5px; }
+    .collection-icons { overflow-y: auto; height: 250px; padding: 10px 0px; }
+    .collection-info ul { margin: 0; padding: 0; }
+    .collection-info ul li { display: inline-block; list-style-type: none; padding-right: 5px; }
+    <?php if (!$use_glyphicons): ?>
     footer { bottom: 20px; position: fixed; }
     .col-sm-6 { width:50%; float: left; }
     .col-sm-4 { width:33.3%; float: left; }
-    .tab-pane, .hide { display: none; }
+    /**.tab-pane, .hide { display: none; }**/
     button.active { border-style: inset; }
-    <?php endif; ?>
+    <?php endif;?>
   </style>
   <script type="text/javascript">
 
@@ -94,7 +117,7 @@ header('X-UA-Compatible: IE=edge,chrome=1');
           $preview      = jQuery('#preview');
 
       if (! is_bootstrap) {
-        jQuery('.tab-pane').hide();
+        //jQuery('.tab-pane').hide();
       }
 
       jQuery('button[data-icon-size]').on('click', function() {
@@ -140,7 +163,7 @@ header('X-UA-Compatible: IE=edge,chrome=1');
 
       jQuery(document).on('popup:build', function() {
 
-        var icon_pack  = $icon_pack.val(),
+        var icon_pack  = '<?php echo $pack; ?>',
             icon_size  = $icon_size.val(),
             icon_align = $icon_align.val(),
             icon_name  = $icon_name.val();
@@ -149,10 +172,9 @@ header('X-UA-Compatible: IE=edge,chrome=1');
           return false;
         }
 
-        var syntax = [ '{{' ];
+        var syntax = [ '{{icon' ];
 
-        syntax.push(icon_pack);
-        syntax.push('>' + icon_name);
+        syntax.push('>' + icon_pack + ':' + icon_name);
 
         var icon_size_pixel = 0;
 
@@ -210,185 +232,119 @@ header('X-UA-Compatible: IE=edge,chrome=1');
 </head>
 <body class="container-fluid dokuwiki">
 
-  <ul class="tabs nav nav-tabs" role="tablist">
+  <div>
 
-    <?php if ($use_font_awesome): ?>
-    <li>
-      <a data-toggle="tab" href="#tab-font-awesome" data-pack="fa">Font-Awesome</a>
-    </li>
-    <?php endif; ?>
-    <?php if ($use_glyphicons): ?>
-    <li>
-      <a data-toggle="tab" href="#tab-glyphicon" data-pack="glyphicon">Glyphicons</a>
-    </li>
-    <?php endif; ?>
-    <?php if ($use_material_design_icons): ?>
-    <li>
-      <a data-toggle="tab" href="#tab-mdi" data-pack="mdi">Material Design Icons</a>
-    </li>
-    <?php endif; ?>
-    <?php if ($use_typicons): ?>
-    <li>
-      <a data-toggle="tab" href="#tab-typicons" data-pack="typcn">Typicons</a>
-    </li>
-    <?php endif; ?>
-    <?php if ($use_font_linux): ?>
-    <li>
-      <a data-toggle="tab" href="#tab-font-linux" data-pack="fl">Font-Linux</a>
-    </li>
-    <?php endif; ?>
-    <?php if ($use_rpg_awesome): ?>
-    <li>
-      <a data-toggle="tab" href="#tab-rpg-awesome" data-pack="fa">RPG-Awesome</a>
-    </li>
-    <?php endif; ?>
-
-  </ul>
-
-  <main class="tab-content">
-
-    <div id="tab-font-awesome" class="tab-pane fade">
-
-      <div class="row tab-icons">
-        <?php foreach($list_font_awesome as $icon): ?>
-          <div class="col-sm-4">
-            <button class="btn btn-default btn-xs btn-icon" title="<?php echo $icon ?>" data-icon-name="<?php echo $icon ?>">
-              <i class="fa fa-fw fa-2x fa-<?php echo $icon ?>"></i>
-            </button>
-            <small><?php echo $icon ?></small>
-          </div>
-        <?php endforeach ?>
+    <aside>
+      <div class="collections">
+        <?php foreach ($categories as $category => $collects): ?>
+        <h4 class="collection-category"><?php echo $category; ?></h4>
+        <?php foreach ($collects as $collection): $data = $collections[$collection];?>
+	        <div class="collection-name">
+	          <a href="<?php echo $popup_url; ?>?pack=<?php echo $collection; ?>" data-pack="<?php echo $collection; ?>"><?php echo $data['name']; ?></a>
+	          <div class="collection-samples">
+	            <?php foreach ($data['samples'] as $sample) {echo "&nbsp;<span class='iconify' data-icon='$collection:$sample' data-height='16'></span>&nbsp;";}?>
+	          </div>
+	        </div>
+	        <?php endforeach;endforeach;?>
       </div>
+    </aside>
 
-    </div>
+    <main>
 
-    <div id="tab-rpg-awesome" class="tab-pane fade">
+      <?php
+if ($pack):
+    $collection_name = $pack;
+    $collection_data = json_decode(file_get_contents("$collections_dir/$collection_name.json"), true);
+    ?>
 
-      <div class="row tab-icons">
-        <?php foreach($list_rpg_awesome as $icon): ?>
-          <div class="col-sm-4">
-            <button class="btn btn-default btn-xs btn-icon" title="<?php echo $icon ?>" data-icon-name="<?php echo $icon ?>">
-              <i class="ra ra-fw ra-2x ra-<?php echo $icon ?>"></i>
-            </button>
-            <small><?php echo $icon ?></small>
-          </div>
-        <?php endforeach ?>
-      </div>
+	      <div class="collection-box">
 
-    </div>
-
-    <div id="tab-mdi" class="tab-pane fade">
-
-      <div class="row tab-icons">
-        <?php foreach($list_material_design_icons as $icon): ?>
-          <div class="col-sm-4">
-            <button class="btn btn-default btn-xs btn-icon" title="<?php echo $icon ?>" data-icon-name="<?php echo $icon ?>">
-              <i class="icon mdi mdi-<?php echo $icon ?>"></i>
-            </button>
-            <small><?php echo $icon ?></small>
-          </div>
-        <?php endforeach ?>
-      </div>
-
-    </div>
-
-    <div id="tab-glyphicon" class="tab-pane fade">
-
-      <div class="row tab-icons">
-        <?php foreach($list_glyphicon as $icon): ?>
-          <div class="col-sm-4">
-            <button class="btn btn-default btn-xs btn-icon" title="<?php echo $icon ?>" data-icon-name="<?php echo $icon ?>">
-              <i class="icon glyphicon glyphicon-<?php echo $icon ?>"></i>
-            </button>
-            <small><?php echo $icon ?></small>
-          </div>
-        <?php endforeach ?>
-      </div>
-
-    </div>
-
-    <div id="tab-typicons" class="tab-pane fade">
-
-      <div class="row tab-icons">
-        <?php foreach($list_typicons as $icon): ?>
-          <div class="col-sm-4">
-            <button class="btn btn-default btn-xs btn-icon" title="<?php echo $icon ?>" data-icon-name="<?php echo $icon ?>">
-              <i class="fa-fw fa-2x typcn typcn-<?php echo $icon ?>"></i>
-            </button>
-            <small><?php echo $icon ?></small>
-          </div>
-        <?php endforeach ?>
-      </div>
-
-    </div>
-
-    <div id="tab-font-linux" class="tab-pane fade">
-
-      <div class="row tab-icons">
-        <?php foreach($list_font_linux as $icon): ?>
-          <div class="col-sm-4">
-            <button class="btn btn-default btn-xs btn-icon" title="<?php echo $icon ?>" data-icon-name="<?php echo $icon ?>">
-              <i class="icon fl fl-<?php echo $icon ?>"></i>
-            </button>
-            <small><?php echo $icon ?></small>
-          </div>
-        <?php endforeach ?>
-      </div>
-
-    </div>
-
-    <div class="preview-box hide">
-
-      <hr/>
-
-      <div class="row">
-
-        <div class="box-alignment col-sm-6">
-          <label>Alignment</label>
-          <div class="btn-group btn-group-xs">
-            <button class="button btn btn-default active" data-icon-align="" title="Use no align">
-              <img src="../../../images/media_align_noalign.png" />
-            </button><button class="button btn btn-default" data-icon-align="left" title="Align the icon on the left">
-              <img src="../../../images/media_align_left.png" />
-            </button><button class="button btn btn-default" data-icon-align="center" title="Align the icon in the center">
-              <img src="../../../images/media_align_center.png" />
-            </button><button class="button btn btn-default" data-icon-align="right" title="Align the icon on the right">
-              <img src="../../../images/media_align_right.png" />
-            </button>
-          </div>
-        </div>
-
-        <div class="box-size col-sm-6">
-          <label>Image size</label>
-          <div class="btn-group btn-group-xs">
-            <button class="button btn btn-default" data-icon-size="small" title="Small size">
-              <img src="../../../images/media_size_small.png" />
-            </button><button class="button btn btn-default" data-icon-size="medium" title="Medium size">
-              <img src="../../../images/media_size_medium.png" />
-            </button><button class="button btn btn-default" data-icon-size="large" title="Large size">
-              <img src="../../../images/media_size_large.png" />
-            </button><button class="button btn btn-default active" data-icon-size="original" title="Original size">
-              <img src="../../../images/media_size_original.png" />
-            </button>
-          </div>
+	        <div class="collection-info">
+	          <h3>
+	            <?php echo $collection_data['info']['name']; ?> <?php echo (isset($collection_data['info']['version']) ? '<small>v' . $collection_data['info']['version'] . '</small>' : ''); ?>
+	          </h3>
+	          <ul>
+	            <li>
+	              <strong>Icon prefix</strong> <code><?php echo $collection_data['prefix']; ?></code>
+	            </li>
+	            <li>
+	              <strong>License</strong> <a href="<?php echo $collection_data['info']['license']['url']; ?>" target="_blank"><?php echo $collection_data['info']['license']['title']; ?></a>
+	            </li>
+	            <li>
+	              <strong>Author</strong> <a href="<?php echo $collection_data['info']['author']['url']; ?>" target="_blank"><?php echo $collection_data['info']['author']['name']; ?></a>
+	            </li>
+	            <li>
+	              <strong>Total icons</strong> <?php echo $collection_data['info']['total']; ?>
+	            </li>
+	          </ul>
+	        </div>
+	        <div class="collection-icons">
+	          <?php foreach (array_keys($collection_data['icons']) as $icon): ?>
+	            <div class="col-sm-4">
+	              <button class="btn btn-default btn-xs btn-icon" title="<?php echo $icon ?>" data-icon-name="<?php echo $icon ?>">
+	                <span class="iconify" data-icon="<?php echo $collection_name; ?>:<?php echo $icon ?>" data-height="32"></span>
+	              </button>
+	              <small><?php echo $icon ?></small>
+	            </div>
+	          <?php endforeach?>
         </div>
 
       </div>
+      <?php endif;?>
 
-      <p>&nbsp;</p>
+      <div class="preview-box">
 
-      <label>Preview</label>
-      <pre id="preview"></pre>
+        <hr/>
 
-      <input type="hidden" id="output" />
-      <input type="hidden" id="icon_pack" />
-      <input type="hidden" id="icon_name" />
-      <input type="hidden" id="icon_size" />
-      <input type="hidden" id="icon_align" />
+        <div class="row">
 
-    </div>
+          <div class="box-alignment col-sm-6">
+            <label>Alignment</label>
+            <div class="btn-group btn-group-xs">
+              <button class="button btn btn-default active" data-icon-align="" title="Use no align">
+                <img src="../../../images/media_align_noalign.png" />
+              </button><button class="button btn btn-default" data-icon-align="left" title="Align the icon on the left">
+                <img src="../../../images/media_align_left.png" />
+              </button><button class="button btn btn-default" data-icon-align="center" title="Align the icon in the center">
+                <img src="../../../images/media_align_center.png" />
+              </button><button class="button btn btn-default" data-icon-align="right" title="Align the icon on the right">
+                <img src="../../../images/media_align_right.png" />
+              </button>
+            </div>
+          </div>
 
-  </main>
+          <div class="box-size col-sm-6">
+            <label>Image size</label>
+            <div class="btn-group btn-group-xs">
+              <button class="button btn btn-default" data-icon-size="small" title="Small size">
+                <img src="../../../images/media_size_small.png" />
+              </button><button class="button btn btn-default" data-icon-size="medium" title="Medium size">
+                <img src="../../../images/media_size_medium.png" />
+              </button><button class="button btn btn-default" data-icon-size="large" title="Large size">
+                <img src="../../../images/media_size_large.png" />
+              </button><button class="button btn btn-default active" data-icon-size="original" title="Original size">
+                <img src="../../../images/media_size_original.png" />
+              </button>
+            </div>
+          </div>
+
+        </div>
+
+        <p>&nbsp;</p>
+
+        <label>Preview</label>
+        <pre id="preview"></pre>
+
+        <input type="hidden" id="output" />
+        <input type="hidden" id="icon_pack" />
+        <input type="hidden" id="icon_name" />
+        <input type="hidden" id="icon_size" />
+        <input type="hidden" id="icon_align" />
+
+      </div>
+
+    </main>
+  </div>
 
   <footer>
     <nav class="navbar navbar-default navbar-fixed-bottom">

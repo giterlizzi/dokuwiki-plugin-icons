@@ -1,0 +1,32 @@
+{
+	"ra": {
+		"name": "RPG Awesome",
+		"total": 495,
+		"author": "Daniela Howe",
+		"url": "https://github.com/nagoshiashumari/Rpg-Awesome",
+		"license": "MIT",
+		"licenseUrl": "https://github.com/nagoshiashumari/Rpg-Awesome/blob/master/LICENSE.md",
+		"samples": [
+			"archer",
+			"dragon",
+			"octopus"
+		],
+		"category": "RPG / Fantasy",
+		"palette": false
+	},
+	"fl": {
+		"name": "Font Logos",
+		"total": 33,
+		"author": "Lucas W",
+		"url": "https://github.com/lukas-w/font-logos",
+		"license": "The Unlicense",
+		"licenseUrl": "https://github.com/lukas-w/font-logos/blob/master/LICENSE",
+		"samples": [
+			"debian",
+			"centos",
+			"slackware"
+		],
+		"category": "Linux",
+		"palette": false
+	}
+}

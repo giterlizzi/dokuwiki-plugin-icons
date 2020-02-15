@@ -1,0 +1,63 @@
+/*!
+ * DokuWiki Icons Plugins
+ *
+ * Home     http://dokuwiki.org/plugin:bootswrapper
+ * Author   Giuseppe Di Terlizzi <giuseppe.diterlizzi@gmail.com>
+ * License  GPL 2 (http://www.gnu.org/licenses/gpl.html)
+ */
+
+
+.dw-icons {
+    &.size-2x { width: 32px; height: 32px; }
+    &.size-3x { width: 48px; height: 48px; }
+    &.size-4x { width: 64px; height: 64px; }
+    &.size-5x { width: 80px; height: 80px; }
+
+    &.spin {
+        -webkit-animation: dw-icons-spin 2s infinite linear;
+        animation: dw-icons-spin 2s infinite linear;
+      }
+    &.pulse {
+        -webkit-animation: dw-icons-spin 1s infinite steps(8);
+        animation: dw-icons-spin 1s infinite steps(8);
+    }
+    &.circle {
+        border-radius: 50%;
+        -moz-border-radius: 50%;
+        -webkit-border-radius: 50%;
+    }
+    &.pull-left {
+        float: left;
+        margin-right: .5em;
+    }
+    &.pull-right {
+        float: right;
+        margin-left: .5em;
+    }
+    &.border {
+        padding: .5em;
+        border: solid 0.08em #eeeeee;
+        border-radius: .5em;
+    }
+}
+
+@-webkit-keyframes dw-icons-spin {
+    0% {
+        -webkit-transform: rotate(0deg);
+        transform: rotate(0deg);
+    }
+    100% {
+        -webkit-transform: rotate(359deg);
+        transform: rotate(359deg);
+    }
+}
+@keyframes dw-icons-spin {
+    0% {
+        -webkit-transform: rotate(0deg);
+        transform: rotate(0deg);
+    }
+    100% {
+        -webkit-transform: rotate(359deg);
+        transform: rotate(359deg);
+    }
+}
