@@ -10,7 +10,7 @@
 
 
 if (!defined('DOKU_INC')) {
-    define('DOKU_INC', dirname(__FILE__) . '/../../../');
+    define('DOKU_INC', dirname(__FILE__) . '/../../../../');
 }
 
 // we do not use a session or authentication here (better caching)
