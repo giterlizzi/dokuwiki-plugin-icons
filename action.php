@@ -27,7 +27,7 @@ class action_plugin_icons extends DokuWiki_Action_Plugin
      */
     public function register(Doku_Event_Handler $controller)
     {
-        $controller->register_hook('TPL_METAHEADER_OUTPUT', 'BEFORE', $this, '_loadcss');
+        #$controller->register_hook('TPL_METAHEADER_OUTPUT', 'BEFORE', $this, '_loadcss');
         $controller->register_hook('TOOLBAR_DEFINE', 'AFTER', $this, '_toolbarButton', array());
         $controller->register_hook('PLUGIN_POPULARITY_DATA_SETUP', 'AFTER', $this, '_popularity');
     }
@@ -76,12 +76,14 @@ class action_plugin_icons extends DokuWiki_Action_Plugin
 
         $event->data['script'][] = array(
             'type'  => 'text/javascript',
-            '_data' => "if (typeof IconifyConfig == 'undefined') { var IconifyConfig = { 'defaultAPI' : '$plugin_dir/exe/iconify.php?prefix={prefix}&icons={icons}' } }"
+            'defer' => 'defer',
+            'src'   => "$plugin_dir/assets/iconify/iconify.min.js",
+            '_data' => null,
         );
 
         $event->data['script'][] = array(
-            'type' => 'text/javascript',
-            'src'  => "$plugin_dir/assets/iconify/iconify.min.js"
+            'type'  => 'text/javascript',
+            '_data' => "Iconify.setConfig('defaultAPI', DOKU_BASE + 'lib/plugin/icons/exe/iconify.php?prefix={prefix}&icons={icons}');"
         );
 
     }

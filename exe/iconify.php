@@ -8,9 +8,41 @@
  * @license  GPL 2 (http://www.gnu.org/licenses/gpl.html)
  */
 
+# NOTE Some Linux distributon change the location of DokuWiki core libraries (DOKU_INC)
+#
+#      Bitnami (Docker)         /opt/bitnami/dokuwiki
+#      LinuxServer.io (Docker)  /app/dokuwiki
+#      Arch Linux               /usr/share/webapps/dokuwiki
+#      Debian/Ubuntu            /usr/share/dokuwiki
+#
+# NOTE If DokuWiki core libraries (DOKU_INC) is in another location you can
+#      create a PHP file in bootstrap3 root directory called "doku_inc.php" with
+#      this content:
+#
+#           <?php define('DOKU_INC', '/path/dokuwiki/');
+#
+#      (!) This file will be deleted on every upgrade of template
+
+$doku_inc_dirs = array(
+    '/opt/bitnami/dokuwiki',                       # Bitnami (Docker)
+    '/usr/share/webapps/dokuwiki',                 # Arch Linux
+    '/usr/share/dokuwiki',                         # Debian/Ubuntu
+    '/app/dokuwiki',                               # LinuxServer.io (Docker),
+    realpath(dirname(__FILE__) . '/../../../../'), # Default DokuWiki path
+);
+
+# Load doku_inc.php file
+#
+if (file_exists(dirname(__FILE__) . '/../doku_inc.php')) {
+    require_once dirname(__FILE__) . '/../doku_inc.php';
+}
 
 if (!defined('DOKU_INC')) {
-    define('DOKU_INC', dirname(__FILE__) . '/../../../../');
+    foreach ($doku_inc_dirs as $dir) {
+        if (!defined('DOKU_INC') && @file_exists("$dir/inc/init.php")) {
+            define('DOKU_INC', "$dir/");
+        }
+    }
 }
 
 // we do not use a session or authentication here (better caching)
@@ -61,7 +93,7 @@ header("Content-Type: $content_type");
 
 http_cached($cache->cache, $cache_ok);
 
-$collection_file = "$iconify_dir/" . $params['prefix'] . ".json";
+$collection_file = "$iconify_dir/" . $params['prefix'] . ".json.gz";
 
 if (!file_exists($collection_file)) {
     header('Content-Type: text/plain; charset=utf-8', true);
@@ -70,7 +102,7 @@ if (!file_exists($collection_file)) {
     exit;
 }
 
-$collection_data = json_decode(file_get_contents($collection_file), true);
+$collection_data = json_decode(io_readFile($collection_file), true);
 
 $iconify_data = array(
     'prefix'  => $params['prefix'],
