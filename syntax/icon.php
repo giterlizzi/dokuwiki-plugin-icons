@@ -101,7 +101,7 @@ class syntax_plugin_icons_icon extends DokuWiki_Syntax_Plugin {
       $align_flag  = "align=center";
     }
 
-    list($match, $flags)  = explode('?', trim($match), 2);
+    list($match, $flags)  = array_pad(explode('?', trim($match), 2), 2, null);
     list($pack, $icon)    = explode('>', trim($match), 2);
 
     $flags .= "&$align_flag";
